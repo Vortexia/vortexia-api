@@ -11,11 +11,11 @@ val refType = System.getenv("GITHUB_REF_TYPE") ?: "branch"
 version = if (refType == "tag") {
     refName.replaceFirst("v", "")
 } else if (refName == "master" || refName == "main") {
-    "1.0.0" // First stable release base
+    "1.1.0" // Base version
 } else if (refName == "development") {
-    "1.0.0-SNAPSHOT"
+    "1.1.0-SNAPSHOT"
 } else {
-    "1.0.0-${refName.uppercase()}-SNAPSHOT"
+    "1.1.0-${refName.uppercase()}-SNAPSHOT"
 }
 
 repositories {

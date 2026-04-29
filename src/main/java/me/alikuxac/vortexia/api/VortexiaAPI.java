@@ -40,4 +40,11 @@ public interface VortexiaAPI {
     void invalidateCache(UUID uuid);
 
     void clearCache();
+
+    // Metadata API
+    CompletableFuture<Optional<String>> getMetadata(UUID uuid, String key);
+
+    CompletableFuture<Void> setMetadata(UUID uuid, String key, String value);
+
+    CompletableFuture<Void> removeMetadata(UUID uuid, String key);
 }
