@@ -3,6 +3,8 @@ package me.alikuxac.vortexia.api;
 
 import me.alikuxac.vortexia.api.model.Identity;
 import me.alikuxac.vortexia.api.addon.AddonManager;
+import me.alikuxac.vortexia.api.scheduler.TaskEngine;
+import me.alikuxac.vortexia.api.storage.StorageManager;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -12,6 +14,10 @@ import java.util.concurrent.CompletableFuture;
 public interface VortexiaAPI {
 
     AddonManager getAddonManager();
+
+    TaskEngine getTaskEngine();
+
+    StorageManager getStorageManager();
 
     Identity getIdentity(UUID uuid);
 
@@ -41,10 +47,13 @@ public interface VortexiaAPI {
 
     void clearCache();
 
-    // Metadata API
+    // Metadata API (Players)
     CompletableFuture<Optional<String>> getMetadata(UUID uuid, String key);
-
     CompletableFuture<Void> setMetadata(UUID uuid, String key, String value);
-
     CompletableFuture<Void> removeMetadata(UUID uuid, String key);
+
+    // Metadata API (Blocks/Locations)
+    CompletableFuture<Optional<String>> getBlockMetadata(org.bukkit.Location loc, String key);
+    CompletableFuture<Void> setBlockMetadata(org.bukkit.Location loc, String key, String value);
+    CompletableFuture<Void> removeBlockMetadata(org.bukkit.Location loc, String key);
 }

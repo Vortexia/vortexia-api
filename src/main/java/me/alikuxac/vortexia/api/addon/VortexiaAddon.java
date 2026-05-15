@@ -8,7 +8,7 @@ public interface VortexiaAddon {
      * 
      * @return Addon name
      */
-    String getName();
+    String getAddonName();
 
     /**
      * Gets the version of the addon.
