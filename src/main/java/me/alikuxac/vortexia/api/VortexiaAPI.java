@@ -1,6 +1,9 @@
 // Developed by alikuxac - Project Vortexia
 package me.alikuxac.vortexia.api;
 
+import me.alikuxac.vortexia.api.network.wireless.WirelessNetworkRegistry;
+import me.alikuxac.vortexia.api.item.ItemRegistry;
+import me.alikuxac.vortexia.api.waila.WailaManager;
 import me.alikuxac.vortexia.api.model.Identity;
 import me.alikuxac.vortexia.api.addon.AddonManager;
 import me.alikuxac.vortexia.api.scheduler.TaskEngine;
@@ -18,6 +21,12 @@ public interface VortexiaAPI {
     TaskEngine getTaskEngine();
 
     StorageManager getStorageManager();
+
+    ItemRegistry getItemRegistry();
+
+    WirelessNetworkRegistry getWirelessRegistry();
+
+    WailaManager getWailaManager();
 
     Identity getIdentity(UUID uuid);
 
@@ -56,4 +65,7 @@ public interface VortexiaAPI {
     CompletableFuture<Optional<String>> getBlockMetadata(org.bukkit.Location loc, String key);
     CompletableFuture<Void> setBlockMetadata(org.bukkit.Location loc, String key, String value);
     CompletableFuture<Void> removeBlockMetadata(org.bukkit.Location loc, String key);
+
+    // Guide/Creative GUI API
+    void openGuide(Player player, String category);
 }
