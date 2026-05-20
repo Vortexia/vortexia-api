@@ -11,12 +11,13 @@ val refType = System.getenv("GITHUB_REF_TYPE") ?: "branch"
 version = if (refType == "tag") {
     refName.replaceFirst("v", "")
 } else if (refName == "master" || refName == "main") {
-    "1.2.1" // Base version
+    "1.2.1"
 } else if (refName == "development") {
-    "1.2.1-SNAPSHOT"
+    "1.2.1-DEV"
 } else {
-    "1.2.1-${refName.uppercase()}-SNAPSHOT"
+    "1.2.1-${refName.uppercase()}"
 }
+
 
 repositories {
     mavenCentral()

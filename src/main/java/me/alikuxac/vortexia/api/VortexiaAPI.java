@@ -8,7 +8,9 @@ import me.alikuxac.vortexia.api.model.Identity;
 import me.alikuxac.vortexia.api.addon.AddonManager;
 import me.alikuxac.vortexia.api.scheduler.TaskEngine;
 import me.alikuxac.vortexia.api.storage.StorageManager;
+import me.alikuxac.vortexia.api.grid.GridManager;
 import org.bukkit.entity.Player;
+
 
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +29,10 @@ public interface VortexiaAPI {
     WirelessNetworkRegistry getWirelessRegistry();
 
     WailaManager getWailaManager();
+
+    GridManager getGridManager();
+
+    me.alikuxac.vortexia.api.recipe.CustomRecipeManager getCustomRecipeManager();
 
     Identity getIdentity(UUID uuid);
 
