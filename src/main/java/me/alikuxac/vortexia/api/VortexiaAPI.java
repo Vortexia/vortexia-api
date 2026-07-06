@@ -9,7 +9,10 @@ import me.alikuxac.vortexia.api.addon.AddonManager;
 import me.alikuxac.vortexia.api.scheduler.TaskEngine;
 import me.alikuxac.vortexia.api.storage.StorageManager;
 import me.alikuxac.vortexia.api.grid.GridManager;
+import me.alikuxac.vortexia.api.recipe.CustomRecipeManager;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 
 import java.util.Optional;
@@ -24,6 +27,8 @@ public interface VortexiaAPI {
 
     StorageManager getStorageManager();
 
+    StorageManager getStorageManager(Plugin plugin);
+
     ItemRegistry getItemRegistry();
 
     WirelessNetworkRegistry getWirelessRegistry();
@@ -32,7 +37,7 @@ public interface VortexiaAPI {
 
     GridManager getGridManager();
 
-    me.alikuxac.vortexia.api.recipe.CustomRecipeManager getCustomRecipeManager();
+    CustomRecipeManager getCustomRecipeManager();
 
     Identity getIdentity(UUID uuid);
 
@@ -68,9 +73,9 @@ public interface VortexiaAPI {
     CompletableFuture<Void> removeMetadata(UUID uuid, String key);
 
     // Metadata API (Blocks/Locations)
-    CompletableFuture<Optional<String>> getBlockMetadata(org.bukkit.Location loc, String key);
-    CompletableFuture<Void> setBlockMetadata(org.bukkit.Location loc, String key, String value);
-    CompletableFuture<Void> removeBlockMetadata(org.bukkit.Location loc, String key);
+    CompletableFuture<Optional<String>> getBlockMetadata(Location loc, String key);
+    CompletableFuture<Void> setBlockMetadata(Location loc, String key, String value);
+    CompletableFuture<Void> removeBlockMetadata(Location loc, String key);
 
     // Guide/Creative GUI API
     void openGuide(Player player, String category);
