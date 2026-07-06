@@ -1,13 +1,15 @@
 # Gradle files
-.gradle
+.gradle/
 build/
+bin/
+out/
 !gradle/wrapper/gradle-wrapper.jar
 
 # IDE files
-.idea
+.idea/
 *.iml
 *.iws
-.vscode
+.vscode/
 
 # Log files
 *.log

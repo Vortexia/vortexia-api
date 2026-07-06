@@ -1,12 +1,20 @@
 # Vortexia API
 
-The official API for the Vortexia plugin ecosystem. This module provides interfaces and models for building Addons and interacting with the Vortexia Core.
+> [!WARNING]
+> This is an **experimental** API build for the Vortexia ecosystem. Interfaces, classes, and packages are subject to change, and major breaking changes can happen without notice. Use at your own risk!
+
+The official developer API for the **Vortexia** Minecraft Plugin ecosystem (1.21+). Build addons, extend digital grids, define wireless structures, register custom items/recipes, and query player identities with ease.
 
 ## Features
 
-- **Identity Management**: Access and manipulate user identities across the Vortexia network.
-- **Addon Lifecycle**: Register and manage your custom hooks into the Core lifecycle.
-- **Event System**: Listen to identity loading, linking, and update events.
+- **Identity Management & Metadata**: Query user identities asynchronously, fetch effective UUIDs (handling cracked/premium mismatches), and store metadata on players or locations.
+- **Addon Lifecycle**: Interface hooks to safely load, enable, and disable your custom extensions.
+- **Dynamic Grid System**: Deeply integrate with energy, resource, and storage meshes by providing your custom `GridNode` and `GridSolver`.
+- **Item & Custom Recipe Registry**: Programmatically register custom items (`VortexiaItem`) and recipe inputs (`CustomRecipe`) which immediately interface with the interactive Guide GUI.
+- **Wireless Networking**: Query, create, or register physical networks into the wireless registry (`WirelessNetworkRegistry`).
+- **WAILA HUD Provider**: Hook customized look-at block displays directly into the on-screen real-time WAILA engine.
+- **Unified Task Engine**: Run Folia-safe region-based asynchronous tasks or delay execution on standard Spigot regions.
+- **Database & Storage API**: Directly query or run async updates against the shared Core database (MySQL/SQLite).
 
 ## Installation
 
@@ -20,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.Vortexia:vortexia-api:1.0.0")
+    compileOnly("com.github.alikuxac:vortexia-api:1.2.2")
 }
 ```
 
@@ -37,41 +45,115 @@ repositories {
 }
 
 dependencies {
-    compileOnly("me.alikuxac.vortexia:vortexia-api:1.0.0")
+    compileOnly("me.alikuxac.vortexia:vortexia-api:1.2.2")
 }
 ```
 
-## Usage
+## Usage & Integration
 
-### Getting the API Instance
+### 1. Fetching the API Singleton
 
-Use the `VortexiaProvider` to access the API singleton:
-
-```java
-VortexiaAPI api = VortexiaProvider.get();
-if (api != null) {
-    // Access features
-    api.getAddonManager().registerAddon(myAddon);
-}
-```
-
-### Implementing an Addon
-
-Implement the `VortexiaAddon` interface in your main class:
+Access the centralized API using the static provider class:
 
 ```java
-public class MyAddon implements VortexiaAddon {
+import me.alikuxac.vortexia.api.VortexiaAPI;
+import me.alikuxac.vortexia.api.VortexiaProvider;
+
+public class MyPlugin extends JavaPlugin {
     @Override
-    public String getName() { return "MyAddon"; }
-    
-    @Override
-    public void onAddonEnable() {
-        // Startup logic
+    public void onEnable() {
+        VortexiaAPI api = VortexiaProvider.get();
+        if (api != null) {
+            getLogger().info("Successfully hooked into VortexiaAPI version: " + api.getAddonManager().getClass().getPackage().getImplementationVersion());
+        }
     }
 }
 ```
 
-## Development
+### 2. Developing an Addon
 
-Developed and maintained by **alikuxac**. 
-Part of the **Vortexia** Project.
+Implement the `VortexiaAddon` lifecycle to hook into plugin stages:
+
+```java
+import me.alikuxac.vortexia.api.addon.VortexiaAddon;
+
+public class MyCustomAddon implements VortexiaAddon {
+    @Override
+    public String getAddonName() {
+        return "CustomMachines";
+    }
+
+    @Override
+    public String getVersion() {
+        return "1.0.0";
+    }
+
+    @Override
+    public String getAuthor() {
+        return "YourName";
+    }
+
+    @Override
+    public void onAddonEnable() {
+        // Startup code, register grids, items, etc.
+    }
+
+    @Override
+    public void onAddonDisable() {
+        // Cleanup code
+    }
+}
+```
+
+### 3. Adding a custom WAILA Tooltip Provider
+
+Register a tooltip to display when players look at your custom block:
+
+```java
+import me.alikuxac.vortexia.api.waila.WailaProvider;
+import net.kyori.adventure.text.Component;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import java.util.List;
+
+public class GeneratorWailaProvider implements WailaProvider {
+    @Override
+    public List<Component> getTooltip(Player player, Block block) {
+        return List.of(
+            Component.text("§6⚡ Steam Generator"),
+            Component.text("§7Status: §aActive"),
+            Component.text("§7Energy Output: §e50 EU/t")
+        );
+    }
+}
+
+// Inside onAddonEnable:
+VortexiaProvider.get().getWailaManager().registerProvider("generator", new GeneratorWailaProvider());
+```
+
+### 4. Registering a Grid Solver
+
+Hook your modular block ticks into the central Grid tick loop:
+
+```java
+import me.alikuxac.vortexia.api.grid.Grid;
+import me.alikuxac.vortexia.api.grid.GridSolver;
+
+public class EnergyGridSolver implements GridSolver {
+    @Override
+    public void solve(Grid grid) {
+        // Distribute energy from producers to consumers within this network
+    }
+}
+
+// Inside onAddonEnable:
+VortexiaProvider.get().getGridManager().registerSolver("energy", new EnergyGridSolver());
+```
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+
+---
+
+> *Copyright belongs to Team Vortexia | API developed by: @alikuxac.*
