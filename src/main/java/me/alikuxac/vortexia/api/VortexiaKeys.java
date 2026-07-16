@@ -29,4 +29,17 @@ public class VortexiaKeys {
      */
     public static final NamespacedKey ITEM_DATA = new NamespacedKey("vortexia", "data");
 
+    /**
+     * Key to store the owner's UUID.
+     * Value type: String
+     */
+    public static final NamespacedKey OWNER_UUID = new NamespacedKey("vortexia", "owner_uuid");
+
+    /**
+     * Key to store the owner's name.
+     * Value type: String
+     */
+    public static final NamespacedKey OWNER_NAME = new NamespacedKey("vortexia", "owner_name");
+
 }
+

@@ -11,11 +11,11 @@ val refType = System.getenv("GITHUB_REF_TYPE") ?: "branch"
 version = if (refType == "tag") {
     refName.replaceFirst("v", "")
 } else if (refName == "master" || refName == "main") {
-    "1.3.0"
+    "1.3.1"
 } else if (refName == "development") {
-    "1.3.0-DEV"
+    "1.3.1-DEV"
 } else {
-    "1.3.0-${refName.uppercase()}"
+    "1.3.1-${refName.uppercase()}"
 }
 
 
