@@ -1,0 +1,32 @@
+name: PR Build & Test Verification
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+      - development
+
+jobs:
+  verify:
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !startsWith(github.event.head_commit.message, '[Ci skip]')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Tests & Build
+        run: ./gradlew test build

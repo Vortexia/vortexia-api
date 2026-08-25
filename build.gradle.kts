@@ -8,14 +8,18 @@ group = "me.alikuxac.vortexia"
 val refName = System.getenv("GITHUB_REF_NAME") ?: "local"
 val refType = System.getenv("GITHUB_REF_TYPE") ?: "branch"
 
+val projectVersion: String by project
+val buildNumber = System.getenv("GITHUB_RUN_NUMBER") ?: "0"
+val commitHash = System.getenv("GITHUB_SHA")?.take(7) ?: "local"
+
 version = if (refType == "tag") {
     refName.replaceFirst("v", "")
 } else if (refName == "master" || refName == "main") {
-    "1.3.1"
+    projectVersion
 } else if (refName == "development") {
-    "1.3.1-DEV"
+    "$projectVersion-b$buildNumber"
 } else {
-    "1.3.1-${refName.uppercase()}"
+    "$projectVersion-$commitHash"
 }
 
 
@@ -24,8 +28,20 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
+val paperApiVersion: String by project
+val nettyVersion: String by project
+val junitVersion: String by project
+
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$paperApiVersion")
+    compileOnly("io.netty:netty-buffer:$nettyVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation("io.netty:netty-buffer:$nettyVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 java {
