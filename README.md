@@ -1,5 +1,11 @@
 # Vortexia API
 
+[![Latest Release](https://img.shields.io/github/v/release/Vortexia/vortexia-api?color=blue&label=Latest%20Release)](https://github.com/Vortexia/vortexia-api/releases/latest)
+[![Dev Version](https://img.shields.io/badge/Dev%20Version-1.3.2--DEV-orange)](https://github.com/Vortexia/vortexia-api/tree/development)
+[![Build Development](https://github.com/Vortexia/vortexia-api/actions/workflows/build-development.yml/badge.branch?branch=development)](https://github.com/Vortexia/vortexia-api/actions/workflows/build-development.yml)
+[![PR Verification](https://github.com/Vortexia/vortexia-api/actions/workflows/build-pr.yml/badge.svg)](https://github.com/Vortexia/vortexia-api/actions/workflows/build-pr.yml)
+[![Publish API](https://github.com/Vortexia/vortexia-api/actions/workflows/publish.yml/badge.svg)](https://github.com/Vortexia/vortexia-api/actions/workflows/publish.yml)
+
 > [!WARNING]
 > This is an **experimental** API build for the Vortexia ecosystem. Interfaces, classes, and packages are subject to change, and major breaking changes can happen without notice. Use at your own risk!
 
@@ -28,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.alikuxac:vortexia-api:1.2.2")
+    compileOnly("com.github.alikuxac:vortexia-api:1.3.2")
 }
 ```
 
@@ -45,7 +51,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("me.alikuxac.vortexia:vortexia-api:1.2.2")
+    compileOnly("me.alikuxac.vortexia:vortexia-api:1.3.2")
 }
 ```
 
